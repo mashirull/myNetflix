@@ -2,7 +2,7 @@
 import MovieCard from "./MovieCard";
 import LoaderCard from "./LoaderCard";
 import {useEffect} from 'react';
-import { fetchUpcommingMovie } from "../redux/slice/upcommingMovieSlide";
+import { fetchTopRatedgMovie} from "../redux/slice/TopRatedSlide";
 import { useAppDispatch, useAppSelector } from "../Hook";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -12,21 +12,23 @@ import SamplePrevArrow from "../customButtom/SamplePrevArrow";
 
 const UpcommingMovie = ():JSX.Element => {
 
-  interface UpCommingMovie {
+  interface TopRatedMOvie {
     poster_path : string ;
     original_title : string;
     genre_ids : number;
-    id : number
+    id : number;
+    vote_average : number,
+    backdrop_path : string
   }
 
-     const upcommingMovie = useAppSelector((state:any) => state.upcommingMovie.upcommingMovie)
-     const isLodding:boolean = useAppSelector((state:any) => state.upcommingMovie.isLodding)
-     const isError:boolean = useAppSelector((state:any) => state.upcommingMovie.isError)
+    const topRatedMovie = useAppSelector((state:any) => state.TopRatedMovie.topRatedMoviesData)
+     const isLodding:boolean = useAppSelector((state:any) => state.TopRatedMovie.isLodding)
+     const isError:boolean = useAppSelector((state:any) => state.TopRatedMovie.isError)
      const dispatch = useAppDispatch()
 
 
      useEffect(() => {
-        dispatch(fetchUpcommingMovie())
+        dispatch(fetchTopRatedgMovie(1))
      },[])
 
      const settings = {
@@ -41,15 +43,15 @@ const UpcommingMovie = ():JSX.Element => {
         {
           breakpoint: 1300,
           settings: {
-            slidesToShow: 7,
-            slidesToScroll: 1,
+            slidesToShow: 6,
+            slidesToScroll: 2,
             infinite: true,
           }
         },
         {
-          breakpoint: 1200,
+          breakpoint: 1100,
           settings: {
-            slidesToShow: 6,
+            slidesToShow: 5,
             slidesToScroll: 1,
             infinite: true,
           }
@@ -57,7 +59,7 @@ const UpcommingMovie = ():JSX.Element => {
         {
           breakpoint: 1000,
           settings: {
-            slidesToShow: 5,
+            slidesToShow: 4,
             slidesToScroll: 1,
             Infinity : true
             // initialSlide: 2
@@ -90,7 +92,7 @@ const UpcommingMovie = ():JSX.Element => {
         {
           breakpoint: 360,
           settings: {
-            slidesToShow: 2,
+            slidesToShow: 3,
             slidesToScroll: 1,
             infinite: true,
           }
@@ -106,8 +108,8 @@ const UpcommingMovie = ():JSX.Element => {
             {isLodding && <LoaderCard/>}
             {isError && <h1 className="text-red-500">Something went Wrong</h1>}
             <Slider {...settings}>
-              {upcommingMovie.map((movie:UpCommingMovie , i:number) => {
-                return <MovieCard  key={i} imageUrl={movie.poster_path} movieTitle={movie.original_title} genres={movie.genre_ids} movieId={movie.id} type="movie"/>
+              {topRatedMovie.map((movie:TopRatedMOvie , i:number) => {
+                return <MovieCard  key={i} imageUrl={movie.poster_path} movieTitle={movie.original_title} genres={movie.genre_ids} movieId={movie.id} type="movie" vote_average={movie.vote_average} backdrop_path={movie.backdrop_path}/>
               })}
             </Slider>
           </div>

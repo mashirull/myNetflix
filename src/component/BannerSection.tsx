@@ -29,31 +29,35 @@ const BannerSection = (): JSX.Element => {
   const [isWatchVideo ,  setIsWatchVideo] = useState(false)
  
   
-  const bannerMovie:BannerMovie = useAppSelector((state:any) => state.allMovie.bannerMovie)
-  const movieIsLodding = useAppSelector(state => state.allMovie.isLodding)
+  const bannerMovie:BannerMovie = useAppSelector((state:any) => state.TrendingMovie.bannerMovie)
+  const movieIsLodding = useAppSelector(state => state.TrendingMovie.isLodding)
+  // const searchData = useAppSelector(state=>state.movieSearch.searchData)
+
   
+
   // const isLodding:boolean = useAppSelector(state=>state.allMovie.isLodding)
 
   
   
-  //checking condition when bannerMovie is not empty and then call the dispatch function
-  if(Object.keys(bannerMovie).length !== 0){
-    dispatch(fetchMovieLogo(bannerMovie.id))
-  }
-
   
-
+  
+  
   useEffect(()=>{
+    //checking condition when bannerMovie is not empty and then call the dispatch function
+    if(Object.keys(bannerMovie).length !== 0){
+      dispatch(fetchMovieLogo(bannerMovie.id))
+    }
       dispatch(fetchMovieVideo(bannerMovie?.id))
 
-      // setTimeout(() => {
-      //   setShowVideo(true)
-      // }, 10000);
-      
-      setTimeout(()=>{
+     const timeoutId =  setTimeout(()=>{
          
         setShowVideo(false)
       },80000);
+
+
+      return ()=> {
+        clearTimeout(timeoutId)
+      }
   },[bannerMovie.id])
   
 
@@ -79,15 +83,15 @@ const BannerSection = (): JSX.Element => {
       {isWatchVideo && <WatchVideoModal  setIsWatch = {setIsWatchVideo} movieId = {bannerMovie?.id}/>}
       <figure className="banner_height relative ">
         {showVideo === false  ? <img src={`https://image.tmdb.org/t/p/original/${bannerMovie.backdrop_path}`} alt="banner" className='m-o w-full h-full' /> 
-      //  : showVideo=== true? <iframe src={`https://www.youtube.com/embed/${trailerVideo[0]?.key}?autoplay=1&mute=1`} allow='autoplay; encrypted-media' allowFullScreen  className=' w-full h-full object-cover' ></iframe>
+      // {/* //  : showVideo=== true? <iframe src={`https://www.youtube.com/embed/${trailerVideo[0]?.key}?autoplay=1&mute=1`} allow='autoplay; encrypted-media' allowFullScreen  className=' w-full h-full object-cover' ></iframe> */}
         : ''
-      }
-        <div className="h-full w-full  text-white absolute top-0 left-0 bg-black bg-opacity-5 pl-16 pt-40 sm:pt-28 sm:pl-8 custom_gradient1 z-20">
+       } 
+        <div className="h-full w-full  text-white absolute top-0 left-0 bg-black bg-opacity-5 pl-16 pt-40 sm:pt-20 460:!pt-20 sm:pl-8 460:!pl-4 460:!px-4  custom_gradient1 z-20">
           <div className='w-1/2 sm:w-full'>
             {/* <h1 className="text-7xl font-bold py-4">{bannerMovie.original_title}</h1> */}
             {movieIsLodding ?  <div className=' w-72 h-20 bg-sky-950 rounded-md Lodder mb-5'></div> :
             <img src={`https://image.tmdb.org/t/p/w500/${logo}`} alt="movieTitle"  className='mb-5 max-h-20 sm:max-h-10'/>}
-            {movieIsLodding ? <BannerOverviewLodder/> : <p className="text-md pb-4 sm:text-sm">{bannerMovie?.overview?.slice(0,200)}..</p>}
+            {movieIsLodding ? <BannerOverviewLodder/> : <p className="text-md pb-4 sm:text-sm 460:!text-[12px]">{bannerMovie?.overview?.slice(0,200)}..</p>}
             
           </div>
 

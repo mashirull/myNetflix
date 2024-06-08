@@ -6,19 +6,22 @@ const initialState = {
     isLodding : false
 }
 
+const BASE_URL = import.meta.env.VITE_MOVIEDB_BASE_URL
+const BEARER = import.meta.env.VITE_SECURITY_BEARER
+
 export const fetchMovieGenres = createAsyncThunk('genres' , async()=> {
 
     const options = {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNjY1Y2JkOTFlNjNhODM4NDY5N2UwYmI5NTZmM2Q0OSIsInN1YiI6IjYzYTg4ZGEzOTFiNTMwMDA4Y2I3YjJhNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UMZOH18UtDt36r2F8D6wrbDpcvJ7sCKphy02m89OaKQ'
+          Authorization: BEARER
         }
       };
       
 
 
-    const response = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en',options)
+    const response = await fetch(`${BASE_URL}genre/movie/list?language=en`,options)
     const data  =  await response.json()
 
     return data

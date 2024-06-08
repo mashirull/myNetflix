@@ -1,8 +1,8 @@
 import Slider from "react-slick";
 import MovieCard from "./MovieCard";
 // import {useState} from 'react'
-import { fetchAllMovieData } from "../redux/slice/trandingMovieSlide";
-import {useEffect} from 'react';
+import { fetchTrendingMovieData } from "../redux/slice/trandingMovieSlide";
+import {useEffect, useState} from 'react';
 import LoaderCard from "./LoaderCard";
 import { useAppDispatch, useAppSelector } from "../Hook";
 import "slick-carousel/slick/slick.css";
@@ -18,28 +18,31 @@ const TrendingNow = ():JSX.Element => {
     poster_path: string ;
     original_title : string ;
     genre_ids : number;
-    id : number
+    id : number;
+    vote_average : number,
+    backdrop_path : string
   }
     
 
-    // const [genresId ,  setGenresId] = useState([])
+    const [time , setTime] = useState('day')
 
-    const movies = useAppSelector((state:any) => state.allMovie.trandingMovie)
-    const isLodding:boolean = useAppSelector((state:any) => state.allMovie.isLodding)
-    const isError:boolean = useAppSelector((state:any) => state.allMovie.isError)
-    // const movieGenres:object[] = useAppSelector(state => state.movieGenres.movieGenres)
-
-    // console.log(movies)
-    // console.log(genresId)
+    const movies = useAppSelector((state:any) => state.TrendingMovie.trandingMovie)
+    const isLodding:boolean = useAppSelector((state:any) => state.TrendingMovie.isLodding)
+    const isError:boolean = useAppSelector((state:any) => state.TrendingMovie.isError)
    
-  
     const dispatch = useAppDispatch()
 
   useEffect(() => {
+
+    if(time == 'day'){
+      dispatch(fetchTrendingMovieData('day'))
+    }
+    if(time === 'week'){
+      dispatch(fetchTrendingMovieData('week'))
+    }
  
-    dispatch(fetchAllMovieData())
    
-  }, [])
+  }, [time])
 
   const settings = {
     // className: 'center',
@@ -54,15 +57,15 @@ const TrendingNow = ():JSX.Element => {
       {
         breakpoint: 1300,
         settings: {
-          slidesToShow: 7,
+          slidesToShow: 6,
           slidesToScroll: 1,
           infinite: true,
         }
       },
       {
-        breakpoint: 1200,
+        breakpoint: 1100,
         settings: {
-          slidesToShow: 6,
+          slidesToShow: 5,
           slidesToScroll: 1,
           infinite: true,
         }
@@ -70,7 +73,7 @@ const TrendingNow = ():JSX.Element => {
       {
         breakpoint: 1000,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 4,
           slidesToScroll: 1,
           Infinity : true
           // initialSlide: 2
@@ -103,7 +106,7 @@ const TrendingNow = ():JSX.Element => {
       {
         breakpoint: 360,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
         }
@@ -114,13 +117,19 @@ const TrendingNow = ():JSX.Element => {
 
   return (
     <div className=" ">
-        <h1 className="text-white text-xl pb-4">Tranding Now</h1>
+        <div className=" flex items-center">
+          <h1 className="text-white text-xl pb-4 sm:pt-2 sm:px-3">Tranding Now</h1>
+          <div className=" ml-1 pb-4">
+            <button className={` mx-1 py-1 px-2 bg-white rounded-md text-xs font-semibold  ${time === 'day' && ' !bg-sky-900 text-white'} hover:bg-sky-900 hover:text-white`} onClick={()=>setTime('day')}>day</button>
+            <button  className={` mx-1 py-1 px-2 bg-white rounded-md text-xs font-semibold ${time === 'week' && ' !bg-sky-900 text-white'} hover:bg-sky-900 hover:text-white `} onClick={()=>setTime('week')}>Week</button>
+          </div>
+        </div>
         <div className=" ">
           {isLodding && <LoaderCard/> }
           {isError && <h1 className="text-red-600">Something went wrong</h1>}
           <Slider {...settings}>
             {!isLodding && movies.map((movie:Movies , i:number) => {
-              return <MovieCard key={i}  imageUrl = {movie.poster_path} movieTitle={movie.original_title} genres={movie.genre_ids} movieId = {movie.id} type="movie" />
+              return <MovieCard key={i}  imageUrl = {movie.poster_path} movieTitle={movie.original_title} genres={movie.genre_ids} movieId = {movie.id} type="movie"  vote_average={movie.vote_average} backdrop_path={movie.backdrop_path}/>
               
             })}
           </Slider>

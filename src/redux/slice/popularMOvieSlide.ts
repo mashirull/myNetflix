@@ -5,32 +5,38 @@ import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
 interface InitialState {
     popularMoviedata : object[] ;
     isLoadding : boolean;
-    isError : boolean
+    isError : boolean;
+    total_pages : number
 }
 
 
 const initialState:InitialState = {
     popularMoviedata : [] ,
     isLoadding : false ,
-    isError : false
+    isError : false,
+    total_pages : 0
 }
 
 
+const BASE_URL = import.meta.env.VITE_MOVIEDB_BASE_URL
+const BEARER = import.meta.env.VITE_SECURITY_BEARER
 
-export const fetchPopularMovir = createAsyncThunk('popularMovie'  ,  async ()=>{
+
+
+export const fetchPopularMovir = createAsyncThunk('popularMovie'  ,  async (page:number)=>{
     const options = {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNjY1Y2JkOTFlNjNhODM4NDY5N2UwYmI5NTZmM2Q0OSIsInN1YiI6IjYzYTg4ZGEzOTFiNTMwMDA4Y2I3YjJhNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UMZOH18UtDt36r2F8D6wrbDpcvJ7sCKphy02m89OaKQ'
+          Authorization: BEARER
         }
       };
 
-    const response = await fetch( 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1' , options);
+    const response = await fetch( `${BASE_URL}movie/popular?language=en-US&page=${page}` , options);
 
     const data = await response.json()
 
-    return data.results
+    return data
 
 })
 
@@ -47,8 +53,9 @@ export const popularMovieSlice = createSlice({
         }) , 
 
         builder.addCase(fetchPopularMovir.fulfilled , (state , action) => {
-            state.popularMoviedata = action.payload
+            state.popularMoviedata = action.payload.results
             state.isLoadding = false
+            state.total_pages = action.payload.total_pages
         }) ,
 
         builder.addCase(fetchPopularMovir.rejected , (state) => {
@@ -57,9 +64,7 @@ export const popularMovieSlice = createSlice({
         })
     } ,
 
-   reducers : {
-
-   }
+   
 })
 
 

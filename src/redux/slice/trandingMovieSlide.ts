@@ -5,7 +5,8 @@ interface InitialState {
   trandingMovie: object[] ;
   isLodding : boolean;
   bannerMovie : {} ;
-  isError : boolean
+  isError : boolean;
+ 
 
 }
 
@@ -13,20 +14,23 @@ const initialState:InitialState = {
     trandingMovie : [],
     isLodding : false,
     bannerMovie : {}, 
-    isError : false
+    isError : false,
 }
 
+const BASE_URL = import.meta.env.VITE_MOVIEDB_BASE_URL
+const BEARER = import.meta.env.VITE_SECURITY_BEARER
 
-export const fetchAllMovieData = createAsyncThunk('fetchMovie' , async ()=>{
+
+export const fetchTrendingMovieData = createAsyncThunk('fetchMovie' , async (time:string)=>{
     const options = {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNjY1Y2JkOTFlNjNhODM4NDY5N2UwYmI5NTZmM2Q0OSIsInN1YiI6IjYzYTg4ZGEzOTFiNTMwMDA4Y2I3YjJhNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UMZOH18UtDt36r2F8D6wrbDpcvJ7sCKphy02m89OaKQ'
+          Authorization: BEARER ,
         }
       };
 
-     const responce =  await fetch('https://api.themoviedb.org/3/trending/movie/day?language=en-US', options)
+     const responce =  await fetch(`${BASE_URL}trending/movie/${time}?language=en-US`, options)
       const data = await responce.json()
       return data.results
       
@@ -36,24 +40,22 @@ export const fetchAllMovieData = createAsyncThunk('fetchMovie' , async ()=>{
 
 
 
- export const movieSlice = createSlice({
+ export const trendingMovieSlice = createSlice({
     initialState , 
     name  : 'movie' ,
 
     extraReducers :(builder)=> {
-        builder.addCase(fetchAllMovieData.pending , ( state) => {
+        builder.addCase(fetchTrendingMovieData.pending , ( state) => {
           state.isLodding = true
         }), 
 
-        builder.addCase(fetchAllMovieData.fulfilled ,  (state , action) => {
+        builder.addCase(fetchTrendingMovieData.fulfilled ,  (state , action) => {
           state.trandingMovie = action.payload
           state.isLodding = false
           state.bannerMovie = action.payload[0]
-
-          
         }),
 
-        builder.addCase(fetchAllMovieData.rejected , (state ) => {
+        builder.addCase(fetchTrendingMovieData.rejected , (state ) => {
           state.isLodding = false
           state.isError = true
         })
@@ -69,7 +71,7 @@ export const fetchAllMovieData = createAsyncThunk('fetchMovie' , async ()=>{
  })
 
 
- export const allMovie = movieSlice.actions
- export default movieSlice.reducer
+ export const allMovie = trendingMovieSlice.actions
+ export default trendingMovieSlice.reducer
   
    

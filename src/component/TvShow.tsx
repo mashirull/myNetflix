@@ -17,7 +17,9 @@ const TvShow = () => {
         name : string ;
         genre_ids : number;
         type : string;
-        id :  number
+        id :  number;
+        backdrop_path : string,
+        vote_average : number
       }
     
         // const dispatch = useDispatch()
@@ -46,15 +48,15 @@ const TvShow = () => {
             {
               breakpoint: 1300,
               settings: {
-                slidesToShow: 7,
-                slidesToScroll: 1,
+                slidesToShow: 6,
+                slidesToScroll: 2,
                 infinite: true,
               }
             },
             {
-              breakpoint: 1200,
+              breakpoint: 1100,
               settings: {
-                slidesToShow: 6,
+                slidesToShow: 5,
                 slidesToScroll: 1,
                 infinite: true,
               }
@@ -62,7 +64,7 @@ const TvShow = () => {
             {
               breakpoint: 1000,
               settings: {
-                slidesToShow: 5,
+                slidesToShow: 4,
                 slidesToScroll: 1,
                 Infinity : true
                 // initialSlide: 2
@@ -95,7 +97,7 @@ const TvShow = () => {
             {
               breakpoint: 360,
               settings: {
-                slidesToShow: 2,
+                slidesToShow: 3,
                 slidesToScroll: 1,
                 infinite: true,
               }
@@ -111,7 +113,7 @@ const TvShow = () => {
         {isError  && <h1 className="text-red-500">Something went wrong</h1>}
         <Slider {...settings}>
           {tvShow.map((tvShow:TVShow , i:number) => {
-              return <MovieCard key={i} imageUrl= {tvShow.poster_path} movieTitle={tvShow.name} genres={tvShow.genre_ids} type = 'tv' movieId={tvShow.id}/>
+              return <MovieCard key={i} imageUrl= {tvShow.poster_path} movieTitle={tvShow.name} genres={tvShow.genre_ids} type = 'tv' movieId={tvShow.id} backdrop_path={tvShow.backdrop_path} vote_average={tvShow.vote_average}/>
           })}
         </Slider>
         </div>

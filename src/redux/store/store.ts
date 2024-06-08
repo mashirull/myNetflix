@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import movieReducer from '../slice/trandingMovieSlide';
+import trendingMovieReducer from '../slice/trandingMovieSlide';
 import popularMovieReducer from '../slice/popularMOvieSlide';
-import upcommingMovieReducer from "../slice/upcommingMovieSlide";
+import TopRatedMovieReducer from "../slice/TopRatedSlide";
 import  tvShowReducer  from "../slice/TvSeriesSlide";
 import logoReducer from "../slice/logoSlide";
 import movieGenresReducer from "../slice/movieGenres";
@@ -10,14 +10,19 @@ import movieVideoReducer from "../slice/movieVideoSlide";
 import imdbReducer from "../slice/imdbSlide";
 import movieDetalReducer from "../slice/MOvieDetalsSlide";
 import tvDetailsReducer from "../slice/tvDetalsSlide";
-import castImagesReducer from "../slice/castImagesSlide"
+import castImagesReducer from "../slice/castImagesSlide";
+import movieSearchReducer from "../slice/SearchMovieSlide";
+import upcomingMOvieReducer from "../slice/UpcomingMovieSlide";
+import addWishlistReducer from "../slice/AddToWishlistSlide";
+import LikeReducer  from "../slice/LikeSlide";
+import authReducer from "../slice/auth/authSlice"
 
 
 export const Store = configureStore({
     reducer : {
-        allMovie : movieReducer ,
+        TrendingMovie : trendingMovieReducer ,
         popularMovie : popularMovieReducer,
-        upcommingMovie : upcommingMovieReducer,
+        TopRatedMovie : TopRatedMovieReducer,
         tvShow : tvShowReducer,
         movieLogo : logoReducer,
         movieGenres : movieGenresReducer,
@@ -26,7 +31,12 @@ export const Store = configureStore({
         imdbData : imdbReducer,
         movieDetail : movieDetalReducer,
         tvDetail : tvDetailsReducer,
-        castImages : castImagesReducer
+        castImages : castImagesReducer,
+        movieWishlist : addWishlistReducer,
+        movieSearch : movieSearchReducer,
+        upcomingMOvie : upcomingMOvieReducer,
+        movieLikeUnlike : LikeReducer,
+        UserAuth :  authReducer
 
     }
 })

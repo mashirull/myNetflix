@@ -8,10 +8,6 @@ const initialState = {
 
 export const fetchImdbRatting = createAsyncThunk('movieImdb' , async(imdb_id:number)=> {
 
-    
-      
-
-
     const response = await fetch(`http://www.omdbapi.com/?i=${imdb_id}&apikey=2c94c6c2`)
     const data  =  await response.json()
     return data

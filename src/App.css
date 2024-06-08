@@ -64,7 +64,8 @@ body{
 }
 
 .sm-text{
-  font-size: 9px;
+  font-size: 10px;
+  font-weight:bolder;
 }
 
 .play:hover span{
@@ -131,18 +132,66 @@ body{
 .mob_nav{
   display: flex;
   flex-direction: column;
-  border: 2px solid white;
   position:absolute;
-  top: 10px;
-  left: 0;
+  top: 20px;
+  left:-152px ;
   padding: 12px 30px;
   background-color: black;
-  width: 200px;
+  width: 260px;
+  height: 100vh;
 }
 
-.mob_nav li{
-  padding: 10px 0px;
+.mob_nav a{
+  padding: 10px 0px !important;
   
+}
+
+.searchIcon:hover  .user_profile{
+  display: flex;
+}
+
+.fadeOut {
+  animation: fadeout 0.2s ease-in-out;
+}
+
+.fadeIn {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.delayInFadeIN{
+  animation: delay 0.0s ease-in-out 0.5s ;
+  /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+}
+ @keyframes delay {
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+ }
+
+@keyframes fadeIn {
+  0%{
+    opacity: 1;
+    transform: scale(1);
+  }
+  100%{
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes fadeout {
+  0%{
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100%{
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 
@@ -153,7 +202,7 @@ body{
 }
 
 .Lodder{
-  animation: 2.9s shine2 linear infinite ease;
+  animation: shine2 2.9s  linear infinite ease;
 }
 
 @keyframes shine2 {
@@ -162,7 +211,7 @@ body{
   }
 
   50%{
-    opacity: 0.5;
+    opacity: 0.1;
   }
 
   100%{
@@ -186,6 +235,24 @@ body{
   .movieCard{
     width: 120px;
     height: 180px;
+  }
+
+ 
+}
+
+@media screen and (max-width: 396px) {
+  .movieCard{
+    width: 100px;
+    height: 150px;
+  }
+
+  
+}
+
+@media screen and (max-width: 1023px) {
+  .mediaQ{
+    width: 100% !important;
+    
   }
 }
 

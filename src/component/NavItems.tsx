@@ -7,9 +7,9 @@ const NavItems = ({mobileNav}:any):JSX.Element => {
   return (
       <ul className={`flex  text-sm text-gray-300 ${mobileNav && 'mob_nav'} `}>
           <NavLink className="px-3 cursor-pointer text-white" to="/">Home</NavLink>
-          <li className="px-3 cursor-pointer">Movies</li>
-          <li className="px-3 cursor-pointer">New & Popular</li>
-          <li className="px-3 cursor-pointer">My List</li>
+          <NavLink  className="px-3 cursor-pointer" to= "/movies?category=popular&page=1">Movies</NavLink>
+          {/* <li className="px-3 cursor-pointer">New & Popular</li> */}
+          <NavLink  className="px-3 cursor-pointer" to="/mylist">My List</NavLink>
       </ul>
   )
 }

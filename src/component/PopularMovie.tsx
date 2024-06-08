@@ -18,7 +18,9 @@ const PopularMovie = () => {
     poster_path : string
     original_title : string
     genre_ids : number
-    id : number
+    id : number;
+    vote_average :number,
+    backdrop_path : string
   }
 
     const dispatch = useAppDispatch()
@@ -29,7 +31,7 @@ const PopularMovie = () => {
 
     useEffect(() => {
       
-      dispatch(fetchPopularMovir())
+      dispatch(fetchPopularMovir(1))
     
       
     }, [])
@@ -46,15 +48,15 @@ const PopularMovie = () => {
         {
           breakpoint: 1300,
           settings: {
-            slidesToShow: 7,
-            slidesToScroll: 1,
+            slidesToShow: 6,
+            slidesToScroll: 2,
             infinite: true,
           }
         },
         {
-          breakpoint: 1200,
+          breakpoint: 1100,
           settings: {
-            slidesToShow: 6,
+            slidesToShow: 5,
             slidesToScroll: 1,
             infinite: true,
           }
@@ -62,7 +64,7 @@ const PopularMovie = () => {
         {
           breakpoint: 1000,
           settings: {
-            slidesToShow: 5,
+            slidesToShow: 4,
             slidesToScroll: 1,
             Infinity : true
             // initialSlide: 2
@@ -95,7 +97,7 @@ const PopularMovie = () => {
         {
           breakpoint: 360,
           settings: {
-            slidesToShow: 2,
+            slidesToShow: 3,
             slidesToScroll: 1,
             infinite: true,
           }
@@ -107,14 +109,14 @@ const PopularMovie = () => {
 
 
   return (
-    <div className="mx-8 my-5 mt-44 sm:mx-0 ">
+    <div className="mx-8 my-5 mt-44 sm:!mt-32  sm:mx-1 ">
         <h1 className="text-white text-xl pb-4">Popular Movies</h1>
         <div className=" ">
           {isLoadding && <LoaderCard/>}
           {isError  && <h1 className="text-red-500">Something went wrong</h1>}
           <Slider {...settings}>
             {PopularMovie.map((movie:Movies , i:number) => {
-              return <MovieCard key={i} imageUrl= {movie.poster_path} movieTitle={movie.original_title} genres={movie.genre_ids} movieId={movie.id} type="movie"/>
+              return <MovieCard key={i} imageUrl= {movie.poster_path} movieTitle={movie.original_title} genres={movie.genre_ids} movieId={movie.id} type="movie" vote_average={movie.vote_average} backdrop_path={movie.backdrop_path}/>
             })}
           </Slider>
 

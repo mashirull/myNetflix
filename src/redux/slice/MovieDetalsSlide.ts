@@ -14,17 +14,20 @@ const initialState:InitialState = {
     isError : false
 }
 
+const BASE_URL = import.meta.env.VITE_MOVIEDB_BASE_URL
+const BEARER = import.meta.env.VITE_SECURITY_BEARER
+
 
 export const fetchMovieDetals = createAsyncThunk('fetchMoviedetals' , async (movieId : Number)=>{
     const options = {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNjY1Y2JkOTFlNjNhODM4NDY5N2UwYmI5NTZmM2Q0OSIsInN1YiI6IjYzYTg4ZGEzOTFiNTMwMDA4Y2I3YjJhNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UMZOH18UtDt36r2F8D6wrbDpcvJ7sCKphy02m89OaKQ'
+          Authorization: BEARER
         }
       };
 
-     const responce =  await fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options)
+     const responce =  await fetch(`${BASE_URL}movie/${movieId}?language=en-US`, options)
       const data = await responce.json()
       return data
        
