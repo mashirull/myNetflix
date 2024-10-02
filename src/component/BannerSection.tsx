@@ -83,7 +83,7 @@ const BannerSection = (): JSX.Element => {
       {isWatchVideo && <WatchVideoModal  setIsWatch = {setIsWatchVideo} movieId = {bannerMovie?.id}/>}
       <figure className="banner_height relative ">
         {showVideo === false  ? <img src={`https://image.tmdb.org/t/p/original/${bannerMovie.backdrop_path}`} alt="banner" className='m-o w-full h-full' /> 
-      // {/* //  : showVideo=== true? <iframe src={`https://www.youtube.com/embed/${trailerVideo[0]?.key}?autoplay=1&mute=1`} allow='autoplay; encrypted-media' allowFullScreen  className=' w-full h-full object-cover' ></iframe> */}
+       : showVideo=== true? <iframe src={`https://www.youtube.com/embed/${trailerVideo[0]?.key}?autoplay=1&mute=1`} allow='autoplay; encrypted-media' allowFullScreen  className=' w-full h-full object-cover' ></iframe>
         : ''
        } 
         <div className="h-full w-full  text-white absolute top-0 left-0 bg-black bg-opacity-5 pl-16 pt-40 sm:pt-20 460:!pt-20 sm:pl-8 460:!pl-4 460:!px-4  custom_gradient1 z-20">

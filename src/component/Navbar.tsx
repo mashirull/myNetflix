@@ -44,7 +44,7 @@ const Navbar = () => {
         {searchModal && <MovieSearchModal setSearchModal = {setSearchModal}/>}
         <div className="flex items-center">
             <div className="mr-10 md2:mr-4">
-                <h1 className="text-red-600 font-medium text-3xl">NETFLIX</h1>
+                <h1 className="text-red-600 font-medium text-3xl">MYFLIX</h1>
             </div>
             <span className={`${mobileNav ? 'block relative' : 'md2:hidden' }`}>
                 <NavItems mobileNav = {mobileNav} />

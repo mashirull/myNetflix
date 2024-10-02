@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from "../Hook";
 
 const WatchVideoModal = ({setIsWatch , movieId}:any) => {
 
-    const videos = useAppSelector(state => state.movieVideo.videos)
+    const videos = useAppSelector(state => state?.movieVideo?.videos)
+    console.log(videos)
     const isLoading = useAppSelector(state => state.movieVideo.isLoadding)
     // const isError = useAppSelector(state => state.movieVideo.isError)
 
